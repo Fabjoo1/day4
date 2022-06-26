@@ -9,4 +9,6 @@ import java.util.List;
 @Repository
 public interface SpidRepo extends CrudRepository<Spid, Long> {
     List<Spid> findSpidById(User user);
+
+    Spid getReferenceById(long spidid);
 }

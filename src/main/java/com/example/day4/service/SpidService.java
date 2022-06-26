@@ -8,6 +8,7 @@ import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class SpidService {
@@ -31,11 +32,13 @@ public class SpidService {
         return spidRepository.findAll();
     }
 
-    public Spid changeSpidStatus(Spid spid) {
-        spid.setStatus(Status.READY_FOR_REVIEW);
-        return spidRepository.save(spid);
+    public Spid changeStatus(Long id, long id2) throws Exception {
+        Optional<Spid> findSpid = spidRepository.findById(id);
+        if (findSpid.get().getStatus().equals(Status.PENDING)) {
+            findSpid.get().setStatus(Status.READY_FOR_REVIEW);
+        } else throw new Exception("Status is already READY_FOR_REVIEW");
+        return spidRepository.save(findSpid.get());
     }
-
     public Spid searchSpid(User user) throws Exception {
         List<Spid> spid = spidRepository.findSpidById(user);
         if (spid.size() <= 0) {
