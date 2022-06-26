@@ -45,4 +45,7 @@ public class User extends Base{
     public void setEmail(String email) {
         this.email = email;
     }
+
+    public void setId(long id) {
+    }
 }

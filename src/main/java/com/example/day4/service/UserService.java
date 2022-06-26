@@ -20,16 +20,12 @@ public class UserService {
         return userRepository.findById(id);
     }
 
-    public User updateUserById(long id, String name, String surname, String email) throws Exception {
-        Optional<User> user = userRepository.findById(id);
-
-        if (user.isEmpty()) {
-            throw new Exception("User does not exist");
-        }
-            user.get().setName(name);
-            user.get().setSurname(surname);
-            user.get().setEmail(email);
-            return userRepository.save(user.get());
+    public User updateUserById(long id,User user){
+        User userToBeEdited=userRepository.getReferenceById(id);
+        if(userToBeEdited==null) return null;
+        userToBeEdited=user;
+        userToBeEdited.setId(id);
+        return userRepository.save(userToBeEdited);
     }
 
     public User createUser(User user) {
